@@ -1,0 +1,19 @@
+# CODEOWNERS — terraform-aws-infra
+# Qualquer alteração nos módulos principais exige revisão de código
+# Documentação: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Regra padrão: todo PR precisa de pelo menos 1 aprovação
+* @ruok-dev
+
+# Módulos de segurança críticos — revisão obrigatória
+modules/iam/       @ruok-dev
+modules/security/  @ruok-dev
+
+# Ambiente de produção — revisão obrigatória antes de qualquer mudança
+environments/prod/ @ruok-dev
+
+# Pipeline de CI/CD — revisão obrigatória
+.github/workflows/ @ruok-dev
+
+# Políticas — revisão obrigatória
+policies/          @ruok-dev

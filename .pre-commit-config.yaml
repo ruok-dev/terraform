@@ -1,0 +1,69 @@
+# .pre-commit-config.yaml
+# Hooks de pré-commit para garantir qualidade e segurança
+# Instalação: pip install pre-commit && pre-commit install
+# Execução manual: pre-commit run --all-files
+
+repos:
+  # ── Hooks gerais ────────────────────────────────────────────────────────────
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        name: Remove trailing whitespace
+      - id: end-of-file-fixer
+        name: Fix end of file
+      - id: check-yaml
+        name: Validate YAML files
+      - id: check-json
+        name: Validate JSON files
+      - id: check-merge-conflict
+        name: Check for merge conflict markers
+      - id: detect-private-key
+        name: 🔐 Detect private keys
+      - id: check-added-large-files
+        name: Check for large files
+        args: ["--maxkb=500"]
+
+  # ── Detecção de secrets ────────────────────────────────────────────────────
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        name: 🔒 Detect secrets in code
+        args: ["--baseline", ".secrets.baseline"]
+        exclude: "terraform.tfvars.example|README.md|SECURITY.md"
+
+  # ── Terraform ──────────────────────────────────────────────────────────────
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.86.0
+    hooks:
+      - id: terraform_fmt
+        name: Terraform format
+        args:
+          - --args=-recursive
+      - id: terraform_validate
+        name: Terraform validate
+        args:
+          - --args=-json
+          - --init-args=-backend=false
+      - id: terraform_tfsec
+        name: 🛡️ tfsec security scan
+        args:
+          - --args=--minimum-severity HIGH
+          - --args=--format lovely
+      - id: terraform_checkov
+        name: 🔍 Checkov compliance scan
+        args:
+          - --args=--quiet
+          - --args=--compact
+          - --args=--framework terraform
+
+  # ── Credenciais AWS ────────────────────────────────────────────────────────
+  - repo: https://github.com/awslabs/git-secrets
+    rev: 1.3.0
+    hooks:
+      - id: git-secrets
+        name: 🔑 AWS credential check
+        entry: git-secrets --scan
+        language: system
+        types: [text]

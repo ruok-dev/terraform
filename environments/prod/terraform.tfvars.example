@@ -1,0 +1,37 @@
+# environments/prod/terraform.tfvars.example
+# ✅ Este arquivo É seguro para commitar — sem valores reais
+# Copie para terraform.tfvars e preencha com seus valores
+# ⚠️  NUNCA commite o terraform.tfvars real (está no .gitignore)
+
+project_name = "meu-projeto"
+environment  = "prod"
+aws_region   = "us-east-1"
+aws_profile  = "terraform-prod"
+owner        = "infra-team"
+cost_center  = "engineering"
+
+vpc_cidr              = "10.2.0.0/16"
+availability_zones    = ["us-east-1a", "us-east-1b", "us-east-1c"]
+public_subnet_cidrs   = ["10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
+private_subnet_cidrs  = ["10.2.10.0/24", "10.2.11.0/24", "10.2.12.0/24"]
+database_subnet_cidrs = ["10.2.20.0/24", "10.2.21.0/24", "10.2.22.0/24"]
+
+ec2_instance_type    = "t3.large"
+asg_min_size         = 2
+asg_max_size         = 6
+asg_desired_capacity = 3
+
+rds_instance_class        = "db.t3.medium"
+rds_allocated_storage     = 100
+rds_max_allocated_storage = 500
+db_name                   = "appdb"
+db_username               = "appuser"  # OBRIGATÓRIO: não use 'admin', 'root', 'dbadmin'
+
+alert_emails = ["prod-alerts@empresa.com", "oncall@empresa.com"]
+
+enable_aws_config = true
+
+create_cicd_role         = true
+github_oidc_provider_arn = "arn:aws:iam::ACCOUNT_ID:oidc-provider/token.actions.githubusercontent.com"
+github_org               = "ruok-dev"
+github_repo              = "terraform"
