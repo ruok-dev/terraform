@@ -204,7 +204,7 @@ make apply ENV=dev
 | Ambiente | Propósito | NAT | Multi-AZ | GuardDuty | AWS Config |
 |----------|-----------|-----|----------|-----------|-----------|
 | **dev** | Desenvolvimento | 1 (econômico) | ❌ | Off | Off |
-| **staging** | Homologação | 1 por AZ | ✅ | ✅ | Off |
+| **staging** | Humologação | 1 por AZ | ✅ | ✅ | Off |
 | **prod** | Produção | 1 por AZ | ✅ | ✅ | ✅ |
 
 ---
